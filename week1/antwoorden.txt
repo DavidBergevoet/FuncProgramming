@@ -1,0 +1,4 @@
+1.1
+f1 is a function which adds 1 and 5 and will always output the number 6
+f2 is a function which always returns the lowest number of the parameter numbers
+f3 is a function which returns the given string concatenated the number of times which is equal to the Int parameter
