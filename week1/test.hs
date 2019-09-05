@@ -1,6 +1,4 @@
-f3 :: String -> Int -> String
-f3 s n
- | n <= 0 = ""
- | otherwise = s ++ f3 s (n-1)
+e3 = "1 + 2" == "6 - 3"
 
-main = print (f3 "test" 2)
+main = print (e3)
+
