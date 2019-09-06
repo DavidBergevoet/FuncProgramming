@@ -1,3 +1,7 @@
+-- David Bergevoet		1043736
+module Shapes
+where
+
 data Shape
  = Circle Double --radius
  | Square Double --length
@@ -12,37 +16,33 @@ showShape (Rectangle l w) = "rectangle of length " ++ show l ++ " and width " ++
 
 -- Area function
 area :: Shape -> Double
-area (Circle r) = 2.0 * pi * ((read (show r) :: Double) * (read (show r) :: Double))
-area (Square l) = (read (show l) :: Double) * (read (show l) :: Double)
-area (Rectangle l w) = (read (show l) :: Double) * (read (show w) :: Double)
+area (Circle r) = 2.0 * pi * (r * r)
+area (Square l) = l * l
+area (Rectangle l w) = l * w
 
 
 -- Perimeter function
 perimeter :: Shape -> Double
-perimeter (Circle r) = 2.0 * pi * (read (show r) :: Double)
-perimeter (Square l) = 4.0 * (read (show l) :: Double)
-perimeter (Rectangle l w) = (2.0 * (read (show l) :: Double)) + (2.0 * (read (show w) :: Double))
+perimeter (Circle r) = 2.0 * pi * r
+perimeter (Square l) = 4.0 * l
+perimeter (Rectangle l w) = (2.0 * l) + w
 
 
 -- Center function
 center :: Shape -> (Double, Double)
-center (Circle r) = ((read (show r) :: Double),(read (show r) :: Double))
-center (Square l) = (((read (show l) :: Double) / 2.0), ((read (show l) :: Double) / 2.0))
-center (Rectangle l w) = (((read (show w) :: Double) / 2.0), ((read (show l) :: Double) / 2.0))
+center (Circle r) = (r,r)
+center (Square l) = ((l / 2.0), (l / 2.0))
+center (Rectangle l w) = ((w / 2.0), (l / 2.0))
 
 
 -- Bounding Box function
 boundingBox :: Shape -> (Double, Double)
-boundingBox (Circle r) = (((read (show r) :: Double)*2.0),((read (show r) :: Double)*2.0))
-boundingBox (Square l) = ((read (show l) :: Double), (read (show l) :: Double))
-boundingBox (Rectangle l w) = ((read (show w) :: Double), (read (show l) :: Double)) 
+boundingBox (Circle r) = ((r*2.0),(r*2.0))
+boundingBox (Square l) = (l, l)
+boundingBox (Rectangle l w) = (w, l) 
 
 -- Variable collection
 cir, squ, rect :: Shape
 cir = Circle(1/3)
 squ = Square(pi)
 rect = Rectangle 2.0 4.0
-
-
-main = print(boundingBox rect)
-

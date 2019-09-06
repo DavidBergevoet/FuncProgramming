@@ -1,24 +1,43 @@
-module Database (database)
+-- David Bergevoet		1043736
+
+module Main
 where
 
--- Class person
-type Name = String
-type Age = Integer
-type FavoriteCourse = String
+type Person  =  (Name, Age, FavouriteCourse)
 
+type Name             =  String
+type Age              =  Integer
+type FavouriteCourse  =  String
 
-age :: Person -> Age 
-age (_n, a, _c) = a
-
--- Instances of person
 frits, peter, ralf, david :: Person
+frits  =  ("Frits",  33,  "Algorithms and Data Structures")
+peter  =  ("Peter",  57,  "Imperative Programming")
+ralf   =  ("Ralf",   33,  "Functional Programming")
+david  =  ("David", 21, "Functional Programming")
 
-frits = ("Frits", 33, "Algorithms")
-peter = ("Peter", 57, "Imperative")
-ralf = ("Ralf", 33, "Func")
-david = ("David", 11, "Calculus")
+students   ::  [Person]
+students   =  [frits, peter, ralf, david]
 
-students :: [Person]
-students = [frits, peter, ralf, david]
+age :: Person -> Age
+age (_n, a, _c)  =  a
 
--- Main
+name             :: Person -> Name
+name (n, _a, _c) = n
+
+favouriteCourse  :: Person -> FavouriteCourse
+favouriteCourse (_n, _a, c) = c
+
+showPerson       :: Person -> String
+showPerson (n, a, c) = "Name: '" ++ n ++ "' Age: "++ (show a) ++ " Favorite course: " ++ c
+
+twins            :: Person -> Person -> Bool
+twins (n, a, c) (n2, a2, c2)
+ | a == a2 = True
+ | otherwise = False
+ 
+
+increaseAge      :: Person -> Person
+increaseAge	(n, a, c) = (n, a+1, c)
+
+
+main = print(increaseAge ralf)
