@@ -1,5 +1,5 @@
 -- David Bergevoet 		1043736
-
+-- Harm van der Heide	1047460
 triangle :: Int -> Int -> String
 line :: Int -> Int -> Int -> String
 
@@ -9,7 +9,5 @@ triangle n off= concat(map(\x -> line x n off) (filter(\y -> y `mod` 2 == 1) [1.
 
 
 christmasTree :: Int -> String
+												 -- The offset is the last odd number - y devided by 2				This is done for a number of odd numbers
 christmasTree n =  concat(map(\y -> triangle y (((last(take n (filter(\x -> x `mod` 2 == 1) [0..])))-y) `div` 2)) (take n (filter(\x -> x `mod` 2 == 1) [0..])))
-
-
-main = putStr(christmasTree 40)

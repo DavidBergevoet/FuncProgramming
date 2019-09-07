@@ -1,3 +1,6 @@
+David Bergevoet		1043736
+Harm van der Heide	1047460
+
 1.1
 f1 is a function which adds 1 and 5 and will always output the number 6
 f2 is a function which always returns the lowest number of the parameter numbers

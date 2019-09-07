@@ -1,6 +1,7 @@
 -- David Bergevoet		1043736
+-- Harm van der Heide	1047460
 
-module Main
+module Database
 where
 
 type Person  =  (Name, Age, FavouriteCourse)
@@ -38,6 +39,3 @@ twins (n, a, c) (n2, a2, c2)
 
 increaseAge      :: Person -> Person
 increaseAge	(n, a, c) = (n, a+1, c)
-
-
-main = print(increaseAge ralf)
