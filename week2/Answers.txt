@@ -1,0 +1,32 @@
+2.8
+	f1 [a] a Int -> Int
+	f2 [a] a -> Int
+	f3 [a] Int -> [a]
+	f4 [a] -> [a]
+	f5 [a] Int Int -> [a]
+	f6 [a] -> [a]
+	
+2.2
+	See folder 2.2/
+	
+2.3
+	The Int is defined as a fixed precision integer which has a maximum value of 9223372036854775807
+	The factorial is much bigger than this so this will overflow to a negative number. The factorial of 66 happens to be exactly 0 with the overflow
+
+2.4
+	1. For the code see folder 2.4/
+	2. Only the first function works because in the other functions we return (a,b)
+	3. The first one is a tuple with a tuple as second argument. The second one is a triple
+		For the code see folder 2.4/
+	
+2.5
+	1.
+		(div 7) 4
+		7 `div` 4
+		(+) 3 7
+		(b, 'b', "b")
+
+	3. 	i :: a -> a
+		k :: (a,b) -> a
+		b :: (a,b,c) -> 
+	
