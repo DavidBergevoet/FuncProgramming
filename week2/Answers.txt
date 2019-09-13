@@ -1,3 +1,6 @@
+David Bergevoet s1043736
+Harm van der Heide s1047460
+
 2.8
 	f1 [a] a Int -> Int
 	f2 [a] a -> Int

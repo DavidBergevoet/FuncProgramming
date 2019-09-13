@@ -1,3 +1,6 @@
+-- David Bergevoet s1043736
+-- Harm van der Heide s1047460
+
 module Char
 where
 import Data.Char
