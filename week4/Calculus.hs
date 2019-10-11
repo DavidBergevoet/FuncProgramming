@@ -43,10 +43,8 @@ derive (Prim Sin) = Prim Cos
 derive (Prim Cos) = (Const (-1)) :*: (Prim Sin)
 derive (Prim Exp) = Prim Exp
 derive (x1 :+: x2) = (derive x1) :+: (derive x2)
-derive (Id :*: Id) = (Const 2) :*: Id
-derive (Const x1 :*: x2) = (Const x1) :*: (derive x2)
-derive (x1 :*: x2) = (derive x1) :*: (derive x2)
-
+derive (x1 :*: x2) = (derive x1) :*: x2 :+: x1 :*: (derive x2)
+derive (x1 :.: x2) = ((derive x1) :.: x2) :*: (derive x2)
 
 
 simplify :: Function -> Function
