@@ -1,3 +1,5 @@
+-- Harm van der Heide s1047460
+-- David Bergevoet s1043736
 
 module Huffman
 where
