@@ -34,7 +34,10 @@ genCode len cnt = do
 
 -- This lets the user break a given code and returns Failed or Correct based on the tries and code
 breakCode :: Int -> IO[Int] -> IO [Char]
-breakCode 0 code = return " Failed"
+breakCode 0 code = do
+  z <- code
+  print z
+  return "Failed"
 breakCode tries code = do
   putStr "Guess code!\n"
   putStr "Tries left: "
