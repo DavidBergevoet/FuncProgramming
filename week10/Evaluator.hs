@@ -39,7 +39,7 @@ instance Applicative Environ where
 -- pure a -> Environ a
    pure x = EN (\[(z,y)]->x)
 -- (<*>) :: Environ (a -> b) -> Environ a -> Environ b
-   EN f <*> EN x  = fmap (f []) (EN x)
+   EN f <*> EN x  = EN $ \env -> f env (x env)
 
 evalR :: Expr -> Environ Integer
 evalR (Lit x) = pure x
