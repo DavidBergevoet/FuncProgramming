@@ -1,3 +1,8 @@
+-- Harm van der Heide s1047460
+-- David Bergevoet s1043736
+
+module RWS
+where
 import Data.Maybe
 
 newtype RWS r w s a = RWS { fromRWS :: r -> s -> (a, s, w) }
@@ -9,15 +14,18 @@ instance Functor (RWS r w s) where
 
 instance (Monoid w) => Applicative (RWS r w s) where
 -- pure :: a -> RWS r w s a
-   pure = error "pure: not yet implemented"
+   pure a = RWS $ \r -> \s -> (a,s,mempty)
 
 -- (<*>) :: RWS r w s (a -> b) -> RWS r w s a -> RWS r w s b
-   (<*>) =  error "<*>: not yet implemented"
+   RWS f <*> RWS a = RWS $ \r -> \s -> let (x,y,z) = f r s in
+      let (x2,y2,z2) = a r s in
+          (x x2,y2 ,mappend z z2)
 
 instance (Monoid w) => Monad (RWS r w s) where
    return = pure
 -- (<>>=>) :: RWS r w s a -> (a -> RWS r w s b) -> RWS r w s b
-   (>>=) =  error ">>=: not yet implemented"
+   RWS a >>= f = RWS $ \r -> \s -> let (x,y,z) = a r s in
+      fromRWS (f x) r s
 
 ask :: (Monoid w) => RWS r w s r
 ask = RWS $ \r -> \s -> (r, s, mempty)
@@ -43,11 +51,25 @@ type Log   = [String]
 type Count = Int
 
 evalRWS :: Expr -> RWS Env Log Count Integer
-evalRWS (Lit i)      =  pure i
-evalRWS (e1 :+: e2)  =  pure (+)  <*> evalRWS e1 <*> evalRWS e2
-evalRWS (e1 :*: e2)  =  pure (*)  <*> evalRWS e1 <*> evalRWS e2
-evalRWS (Div e1 e2)  =  pure div  <*> evalRWS e1 <*> evalRWS e2
-evalRWS (Var v)      =  pure 0
+evalRWS (Lit i)      =  RWS $ \env -> \log -> (i,1,[])
+evalRWS (e1 :+: e2)  =  RWS $ \r -> \s ->let (v, c, l) = fromRWS(evalRWS e1) r s in
+                        let (v2,c2,l2) = fromRWS(evalRWS e2) r s in
+                        (v+v2,c2+c,l2++l)
+evalRWS (e1 :*: e2)  =  RWS $ \r -> \s ->let (v, c, l) = fromRWS(evalRWS e1) r s in
+                        let (v2,c2,l2) = fromRWS(evalRWS e2) r s in
+                        (v*v2,c2+c,l2++l)
+evalRWS (Div e1 e2)  =  RWS $ \r -> \s ->let (v, c, l) = fromRWS(evalRWS e1) r s in
+                        let (v2,c2,l2) = fromRWS(evalRWS e2) r s in
+                        if v2 == 0 then (v,c2+c,l2++l++["Division by zero"]) else (v `div` v2,c2+c,l2++l)
+evalRWS (Var v)      =  RWS $ \env -> \log -> let val = (lookup v env) in
+    case val of
+      Nothing -> (0, 0, ["Variable '" ++ v ++ "' not found!"])
+      Just a -> (a, 0, ["Variable '" ++ v ++ "' Extracted"])
+
+guard :: Integer -> RWS Env Log Count Integer
+guard x
+  | x == 0 = RWS $ \r -> \s -> (1, 0, ["Division by zero"])
+  | otherwise = RWS $ \r -> \s -> (x, 0, ["Toppie"])
 
 p1 = (fromRWS $ evalRWS (Var "a" :+: Lit 1)) [("a", 4711), ("b", 0815)] 0
 p2 = (fromRWS $ evalRWS (Var "a" :+: Var "b")) [("a", 4711), ("b", 0815)] 0

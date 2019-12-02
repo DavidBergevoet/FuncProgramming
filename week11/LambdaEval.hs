@@ -1,3 +1,6 @@
+-- Harm van der Heide s1047460
+-- David Bergevoet s1043736
+
 module LambdaEval
 where
 import Data.Maybe
@@ -75,7 +78,7 @@ eval1 (ef :@: ea)    env = do
 eval2 :: Expr -> Env ->Environ (Either String Value)
 eval2 (Lit i)        env = return $ Right (IntVal i)
 eval2 (Var v)        env = return $ case (lookup v env) of
-                          Nothing -> Left "Segmentation fault (core dumped)"
+                          Nothing -> Left "Variable not found"
                           Just a -> Right a
 eval2 (Bin e1 op e2) env = EN $ \en -> case (fromEN (eval2 e1 env) en) of
                 Left a -> Left a
@@ -90,5 +93,5 @@ eval2 (ef :@: ea)    env = do
     case val1 of
       Left a -> return $ Left a
       Right b -> case b of
-          IntVal i -> return $ Left "Seg F"
+          IntVal i -> return $ Left "Left side is an IntVal"
           FunVal env var body ->  (eval2 body ((var,eval0 ea env):env))
